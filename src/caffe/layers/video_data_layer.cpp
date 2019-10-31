@@ -1,5 +1,7 @@
+
 #ifdef USE_OPENCV
 #include <opencv2/core/core.hpp>
+#include <opencv2/core/core_c.h>
 #include <opencv2/highgui/highgui.hpp>
 
 #include <stdint.h>
@@ -52,12 +54,12 @@ void VideoDataLayer<Dtype>::DataLayerSetUp(
     if (!cap_.open(video_file)) {
       LOG(FATAL) << "Failed to open video: " << video_file;
     }
-    total_frames_ = cap_.get(CV_CAP_PROP_FRAME_COUNT);
+    total_frames_ = cap_.get(cv::CAP_PROP_FRAME_COUNT);
     processed_frames_ = 0;
     // Read image to infer shape.
     cap_ >> cv_img;
     // Set index back to the first frame.
-    cap_.set(CV_CAP_PROP_POS_FRAMES, 0);
+    cap_.set(cv::CAP_PROP_POS_FRAMES, 0);
   } else {
     LOG(FATAL) << "Unknow video type!";
   }

@@ -1,7 +1,17 @@
+/*
+ * @Author: your name
+ * @Date: 2019-10-31 11:53:40
+ * @LastEditTime: 2019-10-31 11:55:03
+ * @LastEditors: Please set LastEditors
+ * @Description: In User Settings Edit
+ * @FilePath: /MobileNetv2-SSDLite/home/tracker/Documents/libs/caffe-ssd/caffe/src/caffe/util/im_transforms.cpp
+ */
+
+
 #ifdef USE_OPENCV
 #include <opencv2/highgui/highgui.hpp>
 
-#if CV_VERSION_MAJOR == 3
+#if CV_VERSION_MAJOR >= 3
 #include <opencv2/imgcodecs/imgcodecs.hpp>
 #define CV_GRAY2BGR cv::COLOR_GRAY2BGR
 #define CV_BGR2GRAY cv::COLOR_BGR2GRAY
@@ -536,14 +546,14 @@ cv::Mat ApplyNoise(const cv::Mat& in_img, const NoiseParameter& param) {
 
   if (param.convert_to_hsv()) {
     cv::Mat hsv_image;
-    cv::cvtColor(out_img, hsv_image, CV_BGR2HSV);
+    cv::cvtColor(out_img, hsv_image, cv::COLOR_BGR2HSV);
     out_img = hsv_image;
   }
   if (param.convert_to_lab()) {
     cv::Mat lab_image;
     out_img.convertTo(lab_image, CV_32F);
     lab_image *= 1.0 / 255;
-    cv::cvtColor(lab_image, out_img, CV_BGR2Lab);
+    cv::cvtColor(lab_image, out_img, cv::COLOR_BGR2Lab);
   }
   return  out_img;
 }
@@ -614,7 +624,7 @@ void AdjustSaturation(const cv::Mat& in_img, const float delta,
                       cv::Mat* out_img) {
   if (fabs(delta - 1.f) != 1e-3) {
     // Convert to HSV colorspae.
-    cv::cvtColor(in_img, *out_img, CV_BGR2HSV);
+    cv::cvtColor(in_img, *out_img, cv::COLOR_BGR2HSV);
 
     // Split the image to 3 channels.
     vector<cv::Mat> channels;
@@ -625,7 +635,7 @@ void AdjustSaturation(const cv::Mat& in_img, const float delta,
     cv::merge(channels, *out_img);
 
     // Back to BGR colorspace.
-    cvtColor(*out_img, *out_img, CV_HSV2BGR);
+    cvtColor(*out_img, *out_img, cv::COLOR_HSV2BGR);
   } else {
     *out_img = in_img;
   }
@@ -648,7 +658,7 @@ void RandomHue(const cv::Mat& in_img, cv::Mat* out_img,
 void AdjustHue(const cv::Mat& in_img, const float delta, cv::Mat* out_img) {
   if (fabs(delta) > 0) {
     // Convert to HSV colorspae.
-    cv::cvtColor(in_img, *out_img, CV_BGR2HSV);
+    cv::cvtColor(in_img, *out_img, cv::COLOR_BGR2HSV);
 
     // Split the image to 3 channels.
     vector<cv::Mat> channels;
@@ -659,7 +669,7 @@ void AdjustHue(const cv::Mat& in_img, const float delta, cv::Mat* out_img) {
     cv::merge(channels, *out_img);
 
     // Back to BGR colorspace.
-    cvtColor(*out_img, *out_img, CV_HSV2BGR);
+    cvtColor(*out_img, *out_img,cv::COLOR_HSV2BGR);
   } else {
     *out_img = in_img;
   }

@@ -1,3 +1,4 @@
+
 #include <algorithm>
 #include <csignal>
 #include <ctime>
@@ -7,7 +8,10 @@
 #include <string>
 #include <utility>
 #include <vector>
-
+#include "opencv2/core/core.hpp"
+#include "opencv2/core/core_c.h"
+#include <opencv2/imgproc/imgproc.hpp>
+#include <opencv2/imgproc/imgproc_c.h>
 #include "boost/iterator/counting_iterator.hpp"
 
 #include "caffe/util/bbox_util.hpp"
@@ -2218,7 +2222,7 @@ void VisualizeBBox(const vector<cv::Mat>& images, const Blob<Dtype>* detections,
     if (!save_file.empty()) {
       if (!cap_out.isOpened()) {
         cv::Size size(image.size().width, image.size().height);
-        cv::VideoWriter outputVideo(save_file, CV_FOURCC('D', 'I', 'V', 'X'),
+        cv::VideoWriter outputVideo(save_file, cv::VideoWriter::fourcc('D', 'I', 'V', 'X'),
             30, size, true);
         cap_out = outputVideo;
       }
